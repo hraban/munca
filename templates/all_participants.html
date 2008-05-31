@@ -1,0 +1,64 @@
+$def with (participants, num_participants, committees, countries)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Participants")
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="/">« everything</a>
+</p>
+
+<h1>Participants</h1>
+
+<table>
+<tr>
+    <th><a href="?sort=person_firstname;order=asc;">First Name</a></th>
+    <th><a href="?sort=person_surnameprefix;order=asc">
+            <abbr title="Surname Prefix">sp</abbr>
+    </a></th>
+    <th><a href="?sort=person_lastname;order=asc">Last Name</a></th>
+    <th><a href="?sort=person_email;order=asc">E-mail</a></th>
+    <th><a href="?sort=country_name;order=asc">Country</a></th>
+    <th><a href="?sort=participant_year;order=desc">Year</a></th>
+    <th><a href="?sort=committee_name;order=asc">Committee</a></th>
+    <th><a href="?sort=contact_comment;order=asc">Comment</a></th>
+    <th>Delete</th>
+</tr>
+$ i = 0
+$for p in participants:
+    <tr class="row_$i">
+    <td><a href="$p.participant_id">$p.person_firstname</a></td>
+    <td>$p.person_surnameprefix</td>
+    <td>$p.person_lastname</td>
+    <td>$p.person_email</td>
+    <td><a href="../country/$p.country_id">$p.country_name</a></td>
+    <td>$p.participant_year</td>
+    <td><a href="../committee/$p.committee_id">$p.committee_name</a></td>
+    <td>$p.shortcomment</td>
+    <td><form action="/participant/$p.participant_id">
+        <input type="submit" value="delete" name="action" />
+    </form></td>
+    </tr>
+    $ i = py.int(i == 0)
+</table>
+
+<p>Total number of participants: <strong>$num_participants</strong>.</p>
+
+<div class="add">
+<h1>Add delegate</h1>
+
+$:render.form_add_delegate(committees, countries)
+</div>
+
+</div></body>
+
+</html>

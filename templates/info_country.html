@@ -1,0 +1,55 @@
+$def with (country, people, num_people, delegates, num_delegates)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head(country.country_name)
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="/country/">« all countries</a>
+</p>
+
+<h1>Country: $country.country_name</h1>
+
+$:render.props(country)
+
+<h2>People from $country.country_name</h2>
+
+<ul>
+$for p in people:
+    <li><a href="../person/$p.person_id">$p_name(p)</a></li>
+</ul>
+
+<p>Total: <strong>$num_people</strong>.</p>
+
+<h2>Delegates from $country.country_name</h2>
+
+<table>
+	<tr><th>Name</th><th>Year</th></tr>
+$for d in delegates:
+    <tr>
+    <td><a href="../participant/$d.participant_id">$p_name(d)</a></td>
+    <td>$d.participant_year</td>
+    </tr>
+</table>
+
+<p>Total: <strong>$num_delegates</strong>.</p>
+
+<div id="actions"><h2>Actions</h2>
+<form action="?" method="post">
+<ul>
+    <li><input name="action" value="delete" type="submit" /></li>
+</ul>
+</form></div>
+
+</div></body>
+
+</html>

@@ -1,0 +1,160 @@
+$def with (boardmems, chairs, committees, countries, entities, lobby_orgs, participants, people)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Home")
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<div id="index">
+<h1>Index</h1>
+<ol>
+	<li><a href="#active_boards">Active Boardmembers</a>
+	    <a class="add" href="#add_boardmember">[add]</a></li>
+        <li><a href="#current_chairs">This year’s chairs</a></li>
+	<li><a href="#committees">Committees</a>
+	    <a class="add" href="#add_committee">[add]</a></li>
+	<li><a href="#countries">Countries</a>
+	    <a class="add" href="#add_country">[add]</a></li>
+	<li><a href="#entities">Entities</a>
+	    <a class="add" href="#add_entity">[add]</a></li>
+	<li><a href="#lobby_orgs">Lobby organisations</a>
+	    <a class="add" href="#add_lobbyist">[add lobbyist]</a>
+	    <a class="add" href="#add_lobby_org">[add lobby org]</a></li>
+	<li><a href="#current_parts">This year’s participants</a>
+	    <a class="add" href="#add_delegate">[add delegate]</a></li>
+	<li><a href="#latest_people">Ten newest people</a>
+	    <a class="add" href="#add_person">[add]</a></li>
+</ol>
+</div>
+
+<p>This is the <a href="http://unisca.org/"><acronym title="United Nations
+International Student Conference Amsterdam">UNISCA</acronym></a> contact
+application. Every <button>button</button> changes the database somehow and
+every <a>link</a> is guaranteed not to, so you can safely click everything red
+:).</p>
+
+<h1>Everything</h1>
+
+<h2 id="active_boards">Active <a href="boardmember/">Boardmembers</a></h2>
+<ol>
+$for mem in boardmems:
+    <li><a href="boardmember/$mem.boardmember_id">$p_name(mem)</a>
+    (<a href="mailto:$mem.person_email">$mem.person_email</a>)</li>
+</ol>
+
+<h2 id="current_chairs">This year’s chairs</h2>
+<ul>
+$for c in chairs:
+    <li><a href="participant/$c.participant_id">$p_name(c)</a>
+    (<a href="committee/$c.committee_id">$c.committee_name</a>)</li>
+</ul>
+
+<h2 id="committees"><a href="/committee/">Committees</a></h2>
+<ol>
+$for c in committees:
+    <li><a href="/committee/$c.committee_id">$c.committee_name</a>
+    ($c.num_participants)</li>
+</ol>
+
+<h2 id="countries"><a title="all countries" href="/country/">Countries</a></h2>
+<ol>
+$for c in countries:
+    <li><a href="country/$c.country_id">$c.country_name</a></li>
+</ol>
+
+<h2 id="entities">Entities</h2>
+<ol>
+$for e in entities:
+    <li><a href="entity/$e.entity_id">$e.entity_name</a>
+    <a href="entity/$e.entity_id?action=edit">[edit]</a></li>
+</ol>
+
+<h2 id="lobby_orgs">Lobby organisations</h2>
+<ol>
+$for org in lobby_orgs:
+    <li><a href="lobby_org/$org.lobby_org_id">$org.lobby_org_name</a>
+    ($org.num_lobbyists)</li>
+</ol>
+
+<h2 id="current_parts">This year’s <a href="participant/">participants</a></h2>
+<ol>
+$for p in participants:
+    <li><a href="participant/$p.participant_id">$p_name(p)</a>
+    from <a href="country/$p.country_id">$p.country_name</a></li>
+</ol>
+
+<h2 id="latest_people">Ten newest <a href="person/" title="Index of all people">people</a></h2>
+<p>The ten newest additions to the database.</p>
+<ol>
+$for p in people:
+    <li><a href="person/$p.person_id">$p_name(p)</a>
+    <a href="person/$p.person_id?action=edit">[edit]</a></li>
+</ol>
+
+<div id="addstuff" class="add">
+<h1>Add something</h1>
+
+<p>Most of these forms only contain the most used fields. You can change
+the more obscure fields after you add an entity.</p>
+
+<h2 id="add_boardmember">Boardmember</h2>
+$:render.form_add_boardmember(countries)
+
+<h2 id="add_committee">Committee</h2>
+$:render.form_add_committee()
+
+<h2 id="add_country">Country</h2>
+$:render.form_add_country()
+
+<h2 id="add_delegate">Delegate</h2>
+$:render.form_add_delegate(committees, countries)
+
+<h2 id="add_entity">Entity</h2>
+<form action="entity/add" method="post">
+<p>name: <input  name="name"  /><input type="submit" /></p>
+</form>
+
+<h2 id="add_lobbyist">Lobbyist</h2>
+<form action="lobbyist/add" method="post">
+<p>
+First Name: <input  name="firstname"  /><br />
+Surname Prefix: <input  name="surnameprefix" size="6" /><br />
+Last Name: <input  name="lastname"  /><br />
+e-mail: <input  name="email"  /><br />
+Year: <input  size="4" name="year"  /><br />
+Committee: <select name="committee">
+$for c in committees:
+    <option value="$c.committee_id">$c.committee_name</option>
+</select><br />
+Country of origin: <select name="origin">
+$for c in countries:
+    <option value="$c.country_id">$c.country_name</option>
+</select><br />
+Lobbyist organisation: <select name="lobbies_for">
+$for org in lobby_orgs:
+    <option value="$org.lobby_org_id">$org.lobby_org_name</option>
+</select><br />
+<input type="submit" />
+</p>
+</form>
+
+<h2 id="add_lobby_org">Lobby organisation</h2>
+<form action="lobby_org/add" method="post">
+<p>name: <input  name="name"  /><input type="submit" /></p>
+</form>
+
+<h2 id="add_person">Person</h2>
+$:render.form_add_person(countries)
+</div>
+
+</div></body>
+
+</html>

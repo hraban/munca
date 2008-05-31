@@ -1,0 +1,19 @@
+$def with (countries)
+
+<form action="/boardmember/add" method="post">
+<p>
+First Name: <input name="firstname"  /><br />
+Surname Prefix: <input name="surnameprefix" size="6" /><br />
+Last Name: <input  name="lastname"  /><br />
+e-mail: <input  name="email"  /><br />
+Starting date: <input name="start" /><br />
+Board Type: <select name="type">
+    <option value="AB">AB</option><option value="DB">DB</option>
+</select><br />
+Country: <select name="origin">
+$for c in countries:
+    <option value="$c.country_id">$c.country_name</option>
+</select><br />
+<input type="submit" />
+</p>
+</form>

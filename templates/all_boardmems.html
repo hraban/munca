@@ -1,0 +1,54 @@
+$def with (mems, countries)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-GB" >
+
+<head>
+$:render.head("Boardmembers")
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="/">« everything</a>
+</p>
+
+<h1>Boardmembers</h1>
+
+<table>
+<tr>
+	<th><a href="?sort=board_active;order=desc">Active</a></th>
+	<th><a href="?sort=person_lastname;order=asc">Name</a></th>
+	<th><a href="?sort=person_email;order=asc">E-mail</a></th>
+	<th><a href="?sort=board_type">AB/DB</a></th>
+	<th><a href="?sort=board_start;order=desc">Start</a></th>
+        <th><a href="?sort=board_stop;order=desc">Stop</a></th>
+</tr>
+$ i = 0
+$for mem in mems:
+    <tr class="row_$i">
+    $if mem.board_active:
+        <td>☑</td>
+    $else:
+        <td>☐</td>
+    <td><a href="$mem.boardmember_id">$p_name(mem)</a></td>
+    <td>$mem.person_email</td>
+    <td>$mem.board_type</td>
+    <td>$mem.board_start</td>
+    <td>$mem.board_stop</td>
+    $ i = py.int(i == 0)
+</table>
+
+<div class="add">
+<h1>Add boardmember</h1>
+
+$:render.form_add_boardmember(countries)
+
+</div>
+
+</div></body>
+
+</html>

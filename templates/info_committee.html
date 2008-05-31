@@ -1,0 +1,73 @@
+$def with (committee, chairs, parts_this_year, parts_other_years, num_this_year)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head(committee.committee_name)
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="/boardmember/">« all boardmembers</a>
+</p>
+
+<h1>Committee: $committee.committee_name</h1>
+
+$:render.props(committee)
+
+<h2>This year’s chair(s)</h2>
+
+<ul>
+$for c in chairs:
+    <li><a href="../participant/$c.participant_id">$p_name(c)</a></li>
+</ul>
+
+<h2>Participants of $committee.committee_name</h2>
+
+<p>Chairs are highlighted.</p>
+
+<h3>This year</h3>
+
+<table>
+<tr><th>year</th><th>name</th></tr>
+$for p in parts_this_year:
+    <tr><td>$p.participant_year</td><td>
+    $if p.is_chair:
+        <strong><a href="../participant/$p.participant_id">$p_name(p)</a></strong>
+    $else:
+        <a href="../participant/$p.participant_id">$p_name(p)</a>
+    </td></tr>
+</table>
+
+<p>Total this year: $num_this_year</p>
+
+<h3>Other years</h3>
+
+<table>
+<tr><th>year</th><th>name</th></tr>
+$for p in parts_other_years:
+    <tr><td>$p.participant_year</td><td>
+    $if p.is_chair:
+        <strong><a href="../participant/$p.participant_id">$p_name(p)</a></strong>
+    $else:
+        <a href="../participant/$p.participant_id">$p_name(p)</a>
+    </td></tr>
+</table>
+
+<div id="actions"><h2>Actions</h2>
+<form action="?" method="post">
+<ul>
+    <li><input name="action" value="delete" type="submit" /></li>
+</ul>
+</form>
+</div>
+
+</div></body>
+
+</html>

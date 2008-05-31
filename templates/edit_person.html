@@ -1,0 +1,65 @@
+$def with (p, countries, contacts)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Edit " + p_name(p))
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="?">« view details</a>
+</p>
+
+<h1>Edit personal details for <a href="?">$p_name(p)</a></h1>
+
+<form action="?" method="post">
+
+<h2>Properties</h2>
+
+<p>
+First name: <input name="firstname" value="$p.person_firstname" /><br />
+Surname Prefix: <input name="surnameprefix" size="6" value="$p.person_surnameprefix" /><br />
+Last name: <input name="lastname" value="$p.person_lastname" /><br />
+e-mail: <input name="email" value="$p.person_email" /><br />
+Phone Number: <input name="phonenr" value="$p.person_phonenr" /><br />
+Country: <select name="country">
+$for c in countries:
+    <option value="$c.country_id"
+    $if p.country_id == c.country_id:
+        selected="selected"
+    >$c.country_name</option>
+</select><br />
+Address:<br />
+<textarea cols="40" rows="2" name="address">$p.contact_addr</textarea><br />
+Comment:<br />
+<textarea cols="40" rows="10" name="comment">$p.contact_comment</textarea><br />
+</p>
+
+<h2>Contacts</h2>
+
+<p>People through which $p_name(p) should be contacted:</p>
+<select name="contact_person" multiple="multiple" size="20">
+$for c in contacts:
+    <option value="$c.person_id"
+    $if c.is_contact_for_me:
+        selected="selected"
+    >$p_name(c)</option>
+</select>
+
+<p>You can set this person as a contact person for other entities/people on
+their respective settings pages.</p>
+
+<p><input type="submit" name="action" value="update" /></p>
+
+</form>
+
+</div></body>
+
+</html>

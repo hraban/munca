@@ -1,0 +1,48 @@
+$def with (e, contacts)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Edit " + e.entity_name)
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="?">« view details</a>
+</p>
+
+<h1>Edit details for $e.entity_name</h1>
+
+<form action="?" method="post">
+<p>
+First name: <input  name="name" value="$e.entity_name" /><br />
+Address:<br />
+<textarea cols="40" rows="2" name="address">$e.contact_addr</textarea><br />
+Comment:<br />
+<textarea cols="40" rows="10" name="comment">$e.contact_comment</textarea><br />
+</p>
+
+<p>People through which this entity should be contacted:</p>
+<select name="contact_person" multiple="multiple" size="20">
+$for c in contacts:
+    <option value="$c.person_id"
+    $if c.is_contact_for_me:
+        selected="selected"
+    >$c.person_firstname $c.person_lastname</option>
+</select>
+</p>
+
+<p><input type="submit" name="action" value="update" /></p>
+
+</form>
+</form>
+
+</div></body>
+
+</html>

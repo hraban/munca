@@ -1,0 +1,55 @@
+$def with (people, num_people, countries)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("People")
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="/">« everything</a>
+</p>
+
+<h1>Everybody</h1>
+
+<table>
+<tr>
+	<th><a href="?sort=person_firstname;order=asc">First Name</a></th>
+	<th><a href="?sort=person_surnameprefix;order=asc">
+			<abbr title="Surname Prefix">sp</abbr>
+	</a></th>
+	<th><a href="?sort=person_lastname;order=asc">Last Name</a></th>
+	<th><a href="?sort=person_email;order=asc">E-mail</a></th>
+	<th><a href="?sort=country_name;order=asc">Country</a></th>
+	<th><a href="?sort=contact_comment;order=asc">Comment</a></th>
+</tr>
+$ i = 0
+$for p in people:
+    <tr class="row_$i">
+    <td><a href="$p.person_id">$p.person_firstname</a></td>
+    <td>$p.person_surnameprefix</td>
+    <td>$p.person_lastname</td>
+    <td><a href="mailto:$p.person_email">$p.person_email</a></td>
+    <td><a href="../country/$p.country_id">$p.country_name</a></td>
+    <td>$p.shortcomment</td>
+    </tr>
+    $ i = py.int(i == 0)
+</table>
+
+<p>Total number of people: <strong>$num_people</strong>.</p>
+
+<div class="add">
+<h1>Add new person</h1>
+$:render.form_add_person(countries)
+</div>
+
+</div></body>
+
+</html>

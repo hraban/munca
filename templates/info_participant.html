@@ -1,0 +1,43 @@
+$def with (participant)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Participant " + p_name(participant))
+</head>
+
+<body><div id="container">
+
+$:render.navigation([["../person/%d" % participant.person_id, "Personal details"]])
+
+<p class="breadcrum">
+<a href="/participant/">« all participants</a>
+</p>
+
+<h1>Participant: $p_name(participant)</h1>
+
+$:render.props(participant)
+
+<div id="actions"><h2>Actions</h2>
+<form action="?" method="post">
+<ul>
+	<li><a href="?action=edit">Edit participant details</a></li>
+	<li><a href="../person/$participant.person_id?action=edit">Edit personal details</a></li>
+	<li><input type="submit" name="action" value="delete" /></li>
+	<li><input type="submit" name="action"
+	$if participant.is_chair:
+	    value="unset chair"
+	$else:
+	    value="make chair"
+	>
+	</li>
+</ul>
+</form>
+</div>
+
+</div></body>
+
+</html>

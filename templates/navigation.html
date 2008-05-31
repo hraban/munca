@@ -1,0 +1,15 @@
+$def with (extra)
+<div  id="navigation">
+<h1>Navigation</h1>
+<ul>
+    <li><a href="/">Everything</a></li>
+    <li><a href="/boardmember/">Boardmembers</a></li>
+    <li><a href="/committee/">Committees</a></li>
+    <li><a href="/country/">Countries</a></li>
+    <li><a href="/participant/">Participants</a></li>
+    <li><a href="/person/">People</a></li>
+    <li><a href="/#addstuff">Add stuff</a></li>
+$for href, title in extra:
+    <li><a href="$href">$title</a></li>
+</ul>
+</div>

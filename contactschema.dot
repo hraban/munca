@@ -1,0 +1,126 @@
+graph er_diagrams_ftw
+{
+
+
+/********** ELEMENTS AND RELATIONS **********/
+
+node [shape=box];
+
+contact_base;
+
+country;
+
+person;
+	origin [shape=diamond];
+		person -- origin;
+		origin -- country [dir=forward];
+
+boardmember;
+	ABmember;
+	DBmember;
+	ADdouble [shape=diamond];
+		ABmember -- ADdouble [label="1..*"];
+		DBmember -- ADdouble;
+	DDdouble [shape=diamond];
+		DBmember -- DDdouble;
+		DBmember -- DDdouble;
+
+entity;
+
+contact_person;
+	contacts [shape=diamond];
+		contact_person -- contacts;
+		contacts -- contact_base [label="1..*"];
+
+committee;
+
+/* Participant to UNISCA */
+participant;
+	membof_committee [shape=diamond];
+		participant -- membof_committee;
+		membof_committee -- committee [dir=forward];
+
+delegate;
+	repr_country [shape=diamond];
+		delegate -- repr_country;
+		repr_country -- country [dir=forward];
+
+lobbyist;
+	lobby_org;
+	lobbies_for [shape=diamond];
+		lobbyist -- lobbies_for;
+		lobbies_for -- lobby_org [dir=forward];
+
+chair;
+
+
+/********** ISAs **********/
+
+node [height=0.6, width=0.8, fixedsize=true, shape=invtriangle, label="ISA"]
+
+person_ISA;
+	person -- person_ISA;
+	person_ISA -- boardmember;
+	person_ISA -- contact_person;
+	person_ISA -- participant;
+board_ISA;
+	boardmember -- board_ISA;
+	board_ISA -- ABmember;
+	board_ISA -- DBmember;
+contact_base_ISA;
+	contact_base -- contact_base_ISA;
+	contact_base_ISA -- person;
+	contact_base_ISA -- entity;
+participant_ISA;
+	participant -- participant_ISA;
+	participant_ISA -- chair;
+	participant_ISA -- delegate;
+	participant_ISA -- lobbyist;
+
+
+/********** ATTRIBUTES **********/
+
+node [height=0.3, width=0.9, fontsize=7, fixedsize=true, shape=ellipse, label="\N"];
+
+contact_id;
+contact_id -- contact_base;
+contact_addr;
+contact_base -- contact_addr;
+contact_comment;
+contact_comment -- contact_base;
+
+country_name;
+country -- country_name;
+country_id;
+country_id -- country;
+
+entity_name;
+entity -- entity_name;
+
+person_firstname;
+person_firstname -- person;
+person_lastname;
+person_lastname -- person;
+person_email;
+person -- person_email;
+
+board_active;
+boardmember -- board_active;
+
+committee_id;
+committee -- committee_id;
+committee_name;
+committee -- committee_name;
+committee_active;
+committee -- committee_active;
+
+participant_year;
+participant -- participant_year;
+participant_motivation;
+participant -- participant_motivation;
+
+lobby_org_id;
+lobby_org -- lobby_org_id;
+lobby_org_name;
+lobby_org -- lobby_org_name;
+}

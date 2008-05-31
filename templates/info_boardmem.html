@@ -1,0 +1,54 @@
+$def with (mem, doubles)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Boardmember " + p_name(mem))
+</head>
+
+<body><div id="container">
+
+$:render.navigation([["../person/%d" % mem.person_id, "Personal details"]])
+
+<p class="breadcrum">
+<a href="/boardmember/">« all boardmembers</a>
+</p>
+
+<h1>Boardmember: $p_name(mem)</h1>
+
+$:render.props(mem)
+
+<h2>Doubles</h2>
+<table>
+<tr><th>delete</th><th>AB/DB</th><th>Name</th></tr>
+$for d in doubles:
+    $if d.is_double:
+        <tr><form action="?double=$d.boardmember_id" method="post">
+        <td><input type="submit" value="delete double" name="action" /></td>
+        <td>$d.board_type</td>
+	<td><a href="$d.boardmember_id">$p_name(d)</a></td>
+        </form></tr>
+</table>
+
+<div id="actions"><h2>Actions</h2>
+<form action="?" method="post">
+<ul>
+<li><a href="?action=edit">Edit boardmember details</a></li>
+<li><a href="../person/$mem.person_id?action=edit">Edit personal details</a></li>
+<li><input type="submit" value="delete" name="action" /></li>
+<li><select name="double">
+$for d in doubles:
+    $if (not d.is_double) and (d.boardmember_id != mem.boardmember_id):
+        <option value="$d.boardmember_id">$p_name(d)</option>
+</select>
+<input type="submit" value="add double" name="action" />
+</li>
+</ul>
+</form></div>
+
+</div></body>
+
+</html>

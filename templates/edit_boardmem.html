@@ -1,0 +1,32 @@
+$def with (mem)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Edit boardmember " + p_name(mem))
+</head>
+
+<body><div id="container">
+
+$:render.navigation([["../person/%s?action=edit" % mem.person_id, "Edit personal details"]])
+
+<p class="breadcrum">
+<a href="?">« view details</a>
+</p>
+
+<h1>Edit boardmember <a href="?">$p_name(mem)</a></h1>
+
+<form action="?" method="post">
+<p>
+Start date: <input name="start" value="$mem.board_start" /><br />
+Stop date: <input name="stop" value="$mem.board_stop" /><br />
+<input type="submit" name="action" value="update" />
+</p>
+</form>
+
+</div></body>
+
+</html>

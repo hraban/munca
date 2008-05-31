@@ -1,0 +1,60 @@
+$def with (committees, num_committees)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Committees")
+</head>
+
+<body><div id="container">
+
+<p class="breadcrum">
+<a href="/">« everything</a>
+</p>
+
+$:render.navigation([])
+
+<h1>Committees</h1>
+
+<table>
+<tr>
+    <th rowspan="2"><a href="?sort=committee_name;order=asc">Name</a></th>
+    <th colspan="2">Delegates</a></th>
+    <th colspan="2">Lobbyists</a></th>
+    <th colspan="2">Represented countries</a></th>
+</tr>
+<tr>
+    <th><a href="?sort=num_delegates_this_year;order=desc">This year</a></th>
+    <th><a href="?sort=num_delegates_other_years;order=desc">Other years</a></th>
+    <th><a href="?sort=num_lobbyists_this_year;order=desc">This year</a></th>
+    <th><a href="?sort=num_lobbyists_other_years;order=desc">Other years</a></th>
+    <th><a href="?sort=num_countries_this_year;order=desc">This year</a></th>
+    <th><a href="?sort=num_countries_other_years;order=desc">Other years</a></th>
+</tr>
+$ i = 0
+$for c in committees:
+    <tr class="row_$i">
+    <td><a href="$c.committee_id">$c.committee_name</a></td>
+    <td>$c.num_delegates_this_year</td>
+    <td>$c.num_delegates_other_years</td>
+    <td>$c.num_lobbyists_this_year</td>
+    <td>$c.num_lobbyists_other_years</td>
+    <td>$c.num_countries_this_year</td>
+    <td>$c.num_countries_other_years</td>
+    </tr>
+    $ i = py.int(i == 0)
+</table>
+
+<p>Total number of committees: <strong>$num_committees</strong>.</p>
+
+<div class="add">
+<h1>Add new committee</h1>
+$:render.form_add_committee()
+</div>
+
+</div></body>
+
+</html>

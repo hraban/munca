@@ -1,0 +1,47 @@
+$def with (countries, num_countries)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Countries")
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<p class="breadcrum">
+<a href="/">« everything</a>
+</p>
+
+<h1>Countries</h1>
+
+<table>
+<tr>
+    <th><a href="?sort=country_name;order=asc;">Name</a></th>
+    <th><a href="?sort=num_delegates;order=desc;">Delegates</a></th>
+    <th><a href="?sort=num_inhabitants;order=desc;">Inhabitants</a></th>
+</tr>
+$ i = 0
+$for c in countries:
+    <tr class="row_$i">
+    <td><a href="$c.country_id">$c.country_name</a></td>
+    <td>$c.num_delegates</td>
+    <td>$c.num_inhabitants</td>
+    </tr>
+    $ i = py.int(i == 0)
+</table>
+
+<p>Total number of countries: <strong>$num_countries</strong>.</p>
+
+<div class="add">
+<h1>Add new country</h1>
+$:render.form_add_country()
+</div>
+
+</div></body>
+
+</html>

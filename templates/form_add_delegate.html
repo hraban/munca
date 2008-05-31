@@ -1,0 +1,24 @@
+$def with (committees, countries)
+
+<form action="delegate/add" method="post">
+<p>
+First Name: <input  name="firstname"  /><br />
+Surname Prefix: <input name="surnameprefix" size="6" /><br />
+Last Name: <input name="lastname"  /><br />
+e-mail: <input name="email"  /><br />
+Year: <input size="4" name="year" value="$year" /><br />
+Committee: <select name="committee">
+$for c in committees:
+    <option value="$c.committee_id">$c.committee_name</option>
+</select><br />
+Country of origin: <select name="origin">
+$for c in countries:
+    <option value="$c.country_id">$c.country_name</option>
+</select><br />
+Delegate for: <select name="repr_country">
+$for c in countries:
+    <option value="$c.country_id">$c.country_name</option>
+</select><br />
+<input type="submit" />
+</p>
+</form>

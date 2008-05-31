@@ -1,0 +1,38 @@
+$def with (p, committees)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head("Edit participant " + p_name(p))
+</head>
+
+<body><div id="container">
+
+$:render.navigation([["../person/%s?action=edit" % p.person_id, "Edit personal details"]])
+
+<p class="breadcrum">
+<a href="?">« view details</a>
+</p>
+
+<h1>Edit participant <a href="?">$p_name(p)</a></h1>
+
+<form action="?" method="post">
+<p>
+Year: <input  size="4" name="year" value="$p.participant_year" /><br />
+Committee: <select name="committee">
+$for c in committees:
+    <option value="$c.committee_id"
+    $if p.committee_id == c.committee_id:
+        selected="selected"
+    >$c.committee_name</option>
+</select><br />
+<input type="submit" name="action" value="update" />
+</p>
+</form>
+
+</div></body>
+
+</html>

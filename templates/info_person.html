@@ -1,0 +1,69 @@
+$def with (person, my_contacts, contacts_for_me)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head(p_name(person))
+</head>
+
+<body><div id="container">
+
+$if person.is_participant:
+    $:render.navigation([["/participant/$person.participant_id", "Participant details"]])
+$else:
+    $:render.navigation([])
+
+<p class="breadcrum">
+<a href="/person/">« everybody</a>
+</p>
+
+<h1>Person: $p_name(person)</h1>
+
+$:render.props(person)
+
+$if my_contacts or contacts_for_me:
+    <h2>Contacts</h2>
+
+$if my_contacts:
+    <h3>For others</h3>
+    <p>$p_name(person) is a contact-person for the following people/entities:</p>
+    <table>
+    <tr><th>Name</th><th>Action</th></tr>
+    $for c in my_contacts:
+        <tr><td><a href="../$c.type/$c.contact_id">$c.text</a></td>
+        <td><form action="?contact_target=$c.contact_id" method="post">
+        <input type="submit" name="action" value="delete contact target" />
+        </form></td></tr>
+    </table>
+
+
+$if contacts_for_me:
+    <h3>Others for this person</h3>
+    <p>If you want to contact $p_name(person) you can do it through one of the following
+    people:</p>
+    <table>
+    <tr><th>Name</th><th>Action</th></tr>
+    $for c in contacts_for_me:
+        <tr><td><a href="$c.person_id">$p_name(c)</a></td>
+        <td><form action="$c.person_id?contact_target=$person.contact_id" method="post">
+        <input type="submit" name="action" value="delete contact target" />
+        </form></td></tr>
+    </table>
+
+<div id="actions"><h2>Actions</h2>
+<form action="?" method="post">
+<ul>
+<li><a href="?action=edit">Edit personal details</a></li>
+$if person.is_participant:
+    <li><a href="../participant/$person.person_id?action=edit">Edit participant details</a></li>
+<li><input type="submit" name="action" value="delete" /></li>
+</ul>
+</form>
+</div>
+
+</div></body>
+
+</html>

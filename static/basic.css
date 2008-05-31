@@ -1,0 +1,89 @@
+html { font-family: serif; }
+body { margin-right: 10em; }
+h1 { margin: 2em 1em; }
+h2 {
+    font-family: monospace;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    border-bottom: solid thin;
+    margin: 3em 3em 1em 1em;
+}
+#actions h2 {
+    border-bottom: none;
+    text-transform: none;
+    font-family: serif;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    border: solid thin;
+    padding: 0.1em 0.3em;
+}
+
+table input {
+    margin: 0.1em 0.1em -0.5em 0.1em;
+    font-size: 0.5em;
+}
+
+#actions, #index, #navigation {
+    font-size: smaller;
+    position: fixed;
+    right: 2em;
+    text-align: right;
+}
+    #actions h2, #index h1, #navigation h1 { 
+        margin: 0.1em;
+        font-size: 1.2em; }
+    #actions ul, #index ol, #navigation ul {
+        list-style: none; }
+    #actions li, #index ol, #navigation li {
+        margin: 0em;
+        border: 0; }
+
+#navigation {
+    top: 0.5em;
+}
+#actions, #index {
+    bottom: 2em;
+    border: dashed thin;
+    padding: 0.2em 0.5em;
+}
+    #actions h2 { margin-bottom: -1em; }
+    #actions li { margin-top: 2em; }
+
+#index {
+    width: 18em;
+    border: none;
+}
+
+.breadcrum {
+    margin: 0.1em;
+    font-size: smaller;
+}
+
+
+/******************* COLOURS ****************/
+
+html {
+    background-color: #fff;
+    color: #000;
+}
+
+h1, a, #index a.add {
+    color: #e50608;
+}
+
+#actions, #index, #navigation {
+    background-color: #fff;
+}
+
+#navigation h1, #navigation a, #index h1, #index a { color: #000; }
+
+#actions li, #navigation li { border-color: #e50608; }
+
+.breadcrum a { color: #777; }
+
+.row_1 { background-color: #ddd; }

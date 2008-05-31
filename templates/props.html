@@ -1,0 +1,23 @@
+$def with (my_obj)
+
+<h2>Properties</h2>
+
+<table>
+$for key, value in py.sorted(my_obj.iteritems()):
+    $if (not key.endswith("_id")) and (key != "contact_comment"):
+        <tr><th>$key</th><td>
+        $if key == "person_email":
+            <a href="mailto:$value">$value</a>
+        $elif key == "committee_name":
+            <a href="/committee/$my_obj.committee_id">$value</a>
+        $elif key == "country_name":
+            <a href="/country/$my_obj.country_id">$value</a>
+        $elif py.isinstance(value, py.int):
+            $value
+        $else:
+            <pre>$value</pre>
+        </td></tr>
+</table>
+
+$if ("contact_comment" in my_obj) and my_obj.contact_comment:
+    <p style="border: solid thin; padding: 0.5em; width: 40em;">$:nl2br(my_obj.contact_comment)</p>

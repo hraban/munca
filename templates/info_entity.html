@@ -1,0 +1,42 @@
+$def with (entity, contacts_for_me)
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+$:render.head(entity.entity_name)
+</head>
+
+<body><div id="container">
+
+$:render.navigation([])
+
+<h1>Entity: $entity.entity_name</h1>
+
+$:render.props(entity)
+
+
+<h2>Contacts</h2>
+$if contacts_for_me:
+    <p>If you want to contact this entity you can do it through one of the
+    following people:</p>
+    <ul>
+    $for c in contacts_for_me:
+        <li><a href="$c.person_id">$p_name(c)</a></li>
+    </ul>
+$else:
+    <p>Nobody is assigned as a contact-person for this entity.</p>
+
+<div id="actions"><h2>Actions</h2>
+<form action="?" method="post">
+<ul>
+	<li><a href="?action=edit">edit</a></li>
+	<li><input type="submit" name="action" value="delete" /></li>
+</ul>
+</form></div>
+
+</div></body>
+
+</html>
